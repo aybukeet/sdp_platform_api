@@ -19,7 +19,7 @@ jobs:
           bundler-cache: true
 
       - name: Scan for security vulnerabilities
-        run: bin/brakeman --no-pager || echo "Brakeman scan complete"
+        run: bundle exec brakeman --no-pager || echo "Brakeman scan complete"
 
   lint:
     runs-on: ubuntu-latest
@@ -34,7 +34,7 @@ jobs:
           bundler-cache: true
 
       - name: Lint code
-        run: bin/rubocop -f github || echo "Rubocop complete"
+        run: bundle exec rubocop -f github || echo "Rubocop complete"
 
   test:
     runs-on: ubuntu-latest
@@ -68,11 +68,11 @@ jobs:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/sdp_platform_test
         run: |
-          bin/rails db:create RAILS_ENV=test || echo "Database might exist"
-          bin/rails db:schema:load RAILS_ENV=test
+          bundle exec rails db:create RAILS_ENV=test || echo "Database might exist"
+          bundle exec rails db:schema:load RAILS_ENV=test
 
       - name: Run tests
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/sdp_platform_test
-        run: bin/rails test || echo "Tests complete"
+        run: bundle exec rails test || echo "Tests complete"
