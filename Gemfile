@@ -42,3 +42,11 @@ group :test do
   gem "shoulda-matchers"
   gem "database_cleaner-active_record"
 end
+# API Documentation
+gem 'rswag'
+gem 'rswag-api'
+gem 'rswag-ui'
+
+group :development, :test do
+  gem 'rswag-specs'
+end
