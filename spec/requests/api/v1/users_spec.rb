@@ -56,33 +56,27 @@ RSpec.describe 'api/v1/users', type: :request do
     end
   end
 
-path '/api/v1/users/{id}' do
-  parameter name: 'id', in: :path, type: :string, description: 'User ID'
+  # 👇 BU BLOK DIŞARIDA DEĞİL, İÇERİDE OLMALI
+  path '/api/v1/users/{id}' do
+    parameter name: 'id', in: :path, type: :string, description: 'User ID'
 
-  get('Show a user') do
-    tags 'Users'
-    produces 'application/json'
+    get('Show a user') do
+      tags 'Users'
+      produces 'application/json'
 
-    response(200, 'successful') do
-      schema type: :object,
-        properties: {
-          success: { type: :boolean },
-          message: { type: :string },
-          data: { '$ref' => '#/components/schemas/User' }
-        }
+      response(200, 'successful') do
+        schema type: :object,
+          properties: {
+            success: { type: :boolean },
+            message: { type: :string },
+            data: { '$ref' => '#/components/schemas/User' }
+          }
 
-      let(:test_user) { User.create!(email: 'show@example.com', password: 'password123', password_confirmation: 'password123', name: 'Show User', credit_balance: 100) }
-      let(:id) { test_user.id }
-      
-      run_test!
-    end
-
-    response(404, 'not found') do
-      let(:id) { 'invalid' }
-      run_test!
-    end
-  end
-end
+        let(:test_user) { User.create!(email: 'show@example.com', password: 'password123', password_confirmation: 'password123', name: 'Show User', credit_balance: 100) }
+        let(:id) { test_user.id }
+        
+        run_test!
+      end
 
       response(404, 'not found') do
         let(:id) { 'invalid' }
